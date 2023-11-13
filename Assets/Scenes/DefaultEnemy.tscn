@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://ch504ermalq0u"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/EnemyController.gd" id="1_gyotl"]
+[ext_resource type="Texture2D" uid="uid://e6spkj0ax72y" path="res://icon.svg" id="1_vacfw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3j8r"]
+size = Vector2(128, 128)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_r5to8"]
+radius = 57.75
+
+[node name="DefaultEnemy" type="Node2D"]
+script = ExtResource("1_gyotl")
+max_hp = null
+is_enemy = null
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 4
+collision_mask = 23
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_vacfw")
+
+[node name="Label" type="Label" parent="CharacterBody2D/Sprite2D"]
+offset_left = -62.0
+offset_top = -63.0
+offset_right = -9.0
+offset_bottom = -37.0
+text = "Enemy"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_d3j8r")
+
+[node name="EnemyHitbox" type="Area2D" parent="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/EnemyHitbox"]
+shape = SubResource("CircleShape2D_r5to8")
+debug_color = Color(0.945098, 0, 0.6, 0.419608)
+
+[connection signal="area_entered" from="CharacterBody2D/EnemyHitbox" to="." method="_on_hitbox_area_entered"]

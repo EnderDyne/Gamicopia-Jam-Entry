@@ -1,8 +1,11 @@
 extends Area2D
 
-@export var speed = 750
 @export var enemy_group = "enemies"
-@export var lifetime = 10
+var speed
+var lifetime
+var is_enemy = false
+var damage_amount : int
+var pierce : bool
 
 func _ready():
 	born_to_die()
@@ -16,8 +19,10 @@ func born_to_die():
 func _physics_process(delta):
 	position += transform.x * speed * delta
 
-# delete enemy if I touch them, also delete myself no matter what
-func _on_Bullet_body_entered(body):
-	if body.is_in_group(enemy_group):
-		body.queue_free()
-	queue_free()
+func hit_enemy():
+	if !pierce:
+		queue_free()
+
+func _on_body_entered(body):
+	if body.is_in_group("walls"):
+		queue_free()
