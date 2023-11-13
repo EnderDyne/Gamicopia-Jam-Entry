@@ -1,0 +1,22 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bk13vc56si5cp"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/PlayerGunResource.gd" id="1_mb6a5"]
+[ext_resource type="PackedScene" uid="uid://dcvr6p722dr5a" path="res://Assets/Scenes/Projectiles/DefaultBullet.tscn" id="1_mdaea"]
+
+[resource]
+script = ExtResource("1_mb6a5")
+gun_name = "Uzi"
+ammo_type = 0
+mag_size = 30
+reload_time = 0.5
+shoot_shake = 10
+shoot_shake_fade = 10
+shoot_delay = 0.05
+bullet_count = 1
+bullet_spread = 45.0
+burst_count = 1
+burst_delay = 0.0
+bullet_scene = ExtResource("1_mdaea")
+bullet_damage = 2
+bullet_lifetime = 10
+bullet_speed = 750

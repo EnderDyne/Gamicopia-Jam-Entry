@@ -1,0 +1,22 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c7ut3ofv7uq2c"]
+
+[ext_resource type="PackedScene" uid="uid://dcvr6p722dr5a" path="res://Assets/Scenes/Projectiles/DefaultBullet.tscn" id="1_apebf"]
+[ext_resource type="Script" path="res://Assets/Scripts/PlayerGunResource.gd" id="2_p3kg0"]
+
+[resource]
+script = ExtResource("2_p3kg0")
+gun_name = "Shotgun"
+ammo_type = 2
+mag_size = 6
+reload_time = 0.7
+shoot_shake = 20
+shoot_shake_fade = 7
+shoot_delay = 0.4
+bullet_count = 5
+bullet_spread = 45.0
+burst_count = 1
+burst_delay = 0.0
+bullet_scene = ExtResource("1_apebf")
+bullet_damage = 3
+bullet_lifetime = 10
+bullet_speed = 750

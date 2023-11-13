@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbbw3ov21jhg6"]
+
+[ext_resource type="Theme" uid="uid://ifx5nsvv1h8d" path="res://Assets/Misc/ui_theme.tres" id="1_xlxra"]
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="AmmoUI" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 217.0
+offset_bottom = 88.0
+theme = ExtResource("1_xlxra")
+text = "Ammo: 12/12
+In Bag: 100"

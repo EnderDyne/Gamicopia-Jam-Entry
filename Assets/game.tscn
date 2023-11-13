@@ -1,0 +1,127 @@
+[gd_scene load_steps=18 format=3 uid="uid://c6e6rphy4vu1n"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/PlayerController.gd" id="1_44buo"]
+[ext_resource type="Script" path="res://Assets/Scripts/PlayerMovement.gd" id="1_qtbhw"]
+[ext_resource type="Texture2D" uid="uid://e6spkj0ax72y" path="res://icon.svg" id="2_j45nr"]
+[ext_resource type="Script" path="res://Assets/Scripts/CameraBehavior.gd" id="3_nwofb"]
+[ext_resource type="Script" path="res://Assets/Scripts/GunRotation.gd" id="4_o4qlv"]
+[ext_resource type="Texture2D" uid="uid://cal1que7osgiq" path="res://Assets/Placeholder Art/placeholderGun.png" id="5_hk53g"]
+[ext_resource type="Script" path="res://Assets/Scripts/GunShooting.gd" id="6_pihf5"]
+[ext_resource type="Script" path="res://Assets/Scripts/PlayerInventory.gd" id="8_k368u"]
+[ext_resource type="PackedScene" uid="uid://bbbw3ov21jhg6" path="res://Assets/Scenes/UI.tscn" id="8_kosv3"]
+[ext_resource type="Resource" uid="uid://bk13vc56si5cp" path="res://Assets/Custom Resources/Player Guns/player_uzi.tres" id="9_g7g7o"]
+[ext_resource type="Resource" uid="uid://gue83i0bxn1q" path="res://Assets/Custom Resources/Player Guns/player_pistol.tres" id="9_rt5ib"]
+[ext_resource type="Resource" uid="uid://c7ut3ofv7uq2c" path="res://Assets/Custom Resources/Player Guns/player_shotgun.tres" id="10_tfp7p"]
+[ext_resource type="Resource" uid="uid://danlwu6o2ue7v" path="res://Assets/Custom Resources/Player Guns/player_burst_rifle.tres" id="11_csuto"]
+[ext_resource type="PackedScene" uid="uid://ch504ermalq0u" path="res://Assets/Scenes/DefaultEnemy.tscn" id="14_yx2n5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kny70"]
+radius = 63.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e8aar"]
+radius = 57.75
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c3xuq"]
+size = Vector2(128, 128)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+script = ExtResource("1_44buo")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="Player"]
+position = Vector2(8, -2)
+collision_layer = 2
+collision_mask = 21
+script = ExtResource("1_qtbhw")
+dash_speed = 2500
+dash_time = 0.15
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/CharacterBody2D"]
+texture = ExtResource("2_j45nr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/CharacterBody2D"]
+shape = SubResource("CircleShape2D_kny70")
+
+[node name="Camera2D" type="Camera2D" parent="Player/CharacterBody2D"]
+zoom = Vector2(0.5, 0.5)
+position_smoothing_enabled = true
+script = ExtResource("3_nwofb")
+
+[node name="GunRotation" type="Node2D" parent="Player/CharacterBody2D"]
+script = ExtResource("4_o4qlv")
+
+[node name="Gun" type="Sprite2D" parent="Player/CharacterBody2D/GunRotation"]
+texture_filter = 1
+position = Vector2(100, 0)
+scale = Vector2(6.455, 6.455)
+texture = ExtResource("5_hk53g")
+script = ExtResource("6_pihf5")
+
+[node name="SpawnPos" type="Node2D" parent="Player/CharacterBody2D/GunRotation/Gun"]
+position = Vector2(6.35167, -2.32378)
+
+[node name="ReloadUI" type="Control" parent="Player/CharacterBody2D"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_top = -110.0
+offset_right = 40.0
+offset_bottom = -70.0
+
+[node name="ReloadBar" type="ColorRect" parent="Player/CharacterBody2D/ReloadUI"]
+layout_mode = 0
+offset_left = -75.0
+offset_right = 75.0
+offset_bottom = 5.0
+
+[node name="ReloadLine" type="ColorRect" parent="Player/CharacterBody2D/ReloadUI/ReloadBar"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = -12.5
+offset_right = 150.0
+offset_bottom = 17.5
+
+[node name="PlayerHitbox" type="Area2D" parent="Player/CharacterBody2D"]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/CharacterBody2D/PlayerHitbox"]
+shape = SubResource("CircleShape2D_e8aar")
+debug_color = Color(0.945098, 0, 0.6, 0.419608)
+
+[node name="PlayerInventory" type="Node2D" parent="Player"]
+script = ExtResource("8_k368u")
+equipped_guns = Array[Resource]([ExtResource("9_rt5ib"), ExtResource("9_g7g7o"), ExtResource("10_tfp7p"), ExtResource("11_csuto")])
+loaded_ammo = Array[int]([12, 30, 6, 27])
+stored_ammo = Array[int]([100, 100, 50, 10])
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Wall" type="StaticBody2D" parent="World" groups=["walls"]]
+position = Vector2(541, 0)
+collision_layer = 16
+collision_mask = 31
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Wall"]
+texture = ExtResource("2_j45nr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Wall"]
+shape = SubResource("RectangleShape2D_c3xuq")
+
+[node name="Label" type="Label" parent="World/Wall"]
+offset_left = -62.0
+offset_top = -63.0
+offset_right = -9.0
+offset_bottom = -37.0
+text = "Wall"
+
+[node name="BulletHolder" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="CanvasLayer" instance=ExtResource("8_kosv3")]
+
+[node name="DefaultEnemy" parent="." instance=ExtResource("14_yx2n5")]
+position = Vector2(394, 277)
+is_enemy = true
